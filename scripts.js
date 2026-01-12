@@ -37,7 +37,7 @@ const questions = [
 ];
 
 const getRandomQuestion = arr => {
-  return arr[Math.round(Math.random() * arr.length)].question;
+  return arr[Math.floor(Math.random() * arr.length)].question;
 }
 
 // код на freeCodeCamp
@@ -78,15 +78,31 @@ const questions = [
     answer: "Hyper Text Markup Language"
   }
 ];
-let x
+
 const getRandomQuestion = arr => {
-  x = Math.round(Math.random() * arr.length)
-   return arr[x].question;
+  let random = Math.floor(Math.random() * arr.length)
+  const que = arr[random];
+   return que;
 } 
 
 const getRandomComputerChoice = arr => {
-  return arr[x].choices[Math.round(Math.random() * 4)];
+  let question = getRandomQuestion(arr)
+  let random = question.choices[Math.floor(Math.random() * question.choices.length)];
+  return {question, random}
 }
-console.log(Math.round(Math.random() * questions.length));     
-console.log(getRandomQuestion(questions))
-console.log(getRandomComputerChoice(questions))
+
+
+const getResults = (question, choice) => {
+  question = question.question;
+  
+  choice = question.choices
+  if (question.answer === choice){
+    return "The computer's choice is correct!"
+  } else {
+    return `The computer's choice is wrong. The correct answer is: ${question.answer}`
+  }
+}
+ console.log(getResults(questions))
+// console.log(getRandomQuestion(questions))
+// console.log(getRandomComputerChoice(questions))
+// console.log(getResults(getRandomQuestion(questions), getRandomComputerChoice(questions)))
