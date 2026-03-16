@@ -355,6 +355,8 @@ const questions = [
   },
 ];
 
+let quest = [...questions]
+
 insults = [
     "You fool",
     "You idiot",
@@ -410,24 +412,15 @@ const startScreen = document.getElementById('start-screen')
 let que = ``
 let countTrue = 0
 let count = 0
+let index = 0
 // код на freeCodeCamp
 
 const getRandomQuestion = (arr) => {
   let random = Math.floor(Math.random() * arr.length);
+  index = random
   const que = arr[random];
   return que;
 };
-
-// const getResults = (question, choice) => {
-//   question = question.question;
-
-//   choice = question.choices;
-//   if (question.answer === choice) {
-//     return "Your's choice is correct!";
-//   } else {
-//     return `Your's choice is wrong. The correct answer is: ${question.answer}`;
-//   }
-// };
 
 function displayQuestion (arr){
   question.innerHTML = `
@@ -452,17 +445,19 @@ function displayVariants(obj){
 </fieldset>`
 }
 
-startBtn.addEventListener('click', ()=>{
+
+  startBtn.addEventListener('click', ()=>{
+  quest = [...questions]
   count = 0
   countTrue = 0
   question.innerHTML = ``
   startScreen.innerHTML = ``
   startBtn.classList.toggle('hidden')
   nextBtn.classList.toggle('hidden')
-  que = getRandomQuestion(questions)
+  que = getRandomQuestion(quest)
   displayQuestion(que)
   displayVariants(que)
-    console.log(que.answer)
+  quest.splice(index, 1)
 })
 
 nextBtn.addEventListener('click', ()=>{
@@ -476,10 +471,10 @@ nextBtn.addEventListener('click', ()=>{
    countTrue += 1
   }
   count += 1
-  que = getRandomQuestion(questions)
+  que = getRandomQuestion(quest)
   displayQuestion(que)
   displayVariants(que)
-
+  quest.splice(index, 1)
   if (count === 5 && countTrue === 5){
 
     startBtn.classList.toggle('hidden')
@@ -498,6 +493,4 @@ nextBtn.addEventListener('click', ()=>{
     nextBtn.classList.toggle('hidden')
     variants.innerHTML = ``
   }
-
-
 })
